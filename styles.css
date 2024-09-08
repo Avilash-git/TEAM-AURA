@@ -1,0 +1,112 @@
+/* Importing Google Fonts for a modern and elegant look */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: linear-gradient(to right, #6dd5ed, #2193b0); /* Gradient background */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Elegant shadow effect */
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.3s ease;
+}
+
+form:hover {
+    transform: translateY(-5px); /* Hover effect for slight elevation */
+}
+
+h2 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #2193b0; /* Color change on focus */
+    outline: none;
+    box-shadow: 0 0 8px rgba(33, 147, 176, 0.3);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button {
+    width: 100%;
+    background-color: #2193b0;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #176480; /* Darker shade on hover */
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button[type="button"] {
+    width: 48%; /* For Next/Previous buttons */
+}
+
+button[type="submit"] {
+    background-color: #34a853; /* Green for submit button */
+}
+
+button[type="submit"]:hover {
+    background-color: #2d8f47; /* Darker green on hover */
+}
+
+.form-step {
+    display: none; /* Hide form steps by default */
+}
+
+.form-step.active {
+    display: block; /* Show only active form step */
+}
+
+#hip-input {
+    display: none; /* Hide hip input for males by default */
+}
