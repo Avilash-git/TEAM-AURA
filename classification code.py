@@ -132,7 +132,7 @@ def submit_form():
     db.session.add(new_user)
     db.session.commit()
 
-    # Return a result page with the fitness classification
+    # Return a RESULT page with the fitness classification
     return f"""
     <h1>Your Fitness Classification</h1>
     <p>Body Fat Percentage: {fat_percentage:.2f}%</p>
