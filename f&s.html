@@ -4,38 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Classification Form</title>
-    
-    <!-- Link to CSS -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Inline CSS for quick testing, or include this in the external style.css -->
+
+    <!-- Existing CSS and Modal CSS -->
     <style>
-        /* Importing Google Fonts for a modern and elegant look */
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 
         body {
             font-family: 'Raleway', sans-serif;
-            background: linear-gradient(to right, #6dd5ed, #2193b0); /* Gradient background */
+            background: linear-gradient(to right, #323435, #3d3d3d);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         form {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Elegant shadow effect */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 500px;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slide-in 1s forwards;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         form:hover {
-            transform: translateY(-5px); /* Hover effect for slight elevation */
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
@@ -44,6 +56,17 @@
             margin-bottom: 20px;
             color: #333;
             font-size: 24px;
+            opacity: 0;
+            animation: fade-in 1.5s forwards 0.2s;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         label {
@@ -52,6 +75,8 @@
             color: #333;
             margin-bottom: 5px;
             font-weight: 600;
+            opacity: 0;
+            animation: fade-in 1.5s forwards 0.5s;
         }
 
         input, select, textarea {
@@ -63,17 +88,14 @@
             font-size: 14px;
             box-sizing: border-box;
             transition: all 0.3s ease;
+            opacity: 0;
+            animation: slide-in 1s forwards 0.7s;
         }
 
         input:focus, select:focus, textarea:focus {
-            border-color: #2193b0; /* Color change on focus */
+            border-color: #2193b0;
             outline: none;
             box-shadow: 0 0 8px rgba(33, 147, 176, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
         }
 
         button {
@@ -86,11 +108,14 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            animation: slide-in 1s forwards 0.9s;
         }
 
         button:hover {
-            background-color: #176480; /* Darker shade on hover */
+            background-color: #176480;
+            transform: translateY(-3px);
         }
 
         .navigation-buttons {
@@ -100,27 +125,47 @@
         }
 
         button[type="button"] {
-            width: 48%; /* For Next/Previous buttons */
+            width: 48%;
         }
 
         button[type="submit"] {
-            background-color: #34a853; /* Green for submit button */
+            background-color: #34a853;
         }
 
         button[type="submit"]:hover {
-            background-color: #2d8f47; /* Darker green on hover */
+            background-color: #2d8f47;
         }
 
         .form-step {
-            display: none; /* Hide form steps by default */
+            display: none;
         }
 
         .form-step.active {
-            display: block; /* Show only active form step */
+            display: block;
         }
 
         #hip-input {
-            display: none; /* Hide hip input for males by default */
+            display: none;
+        }
+
+        /* Additional animations for form elements */
+        .fade-in {
+            animation: fade-in 2s ease;
+        }
+
+        .slide-left {
+            animation: slide-left 1.2s ease forwards;
+        }
+
+        @keyframes slide-left {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -131,98 +176,88 @@
         <h2>Fitness Classification Form</h2>
 
         <!-- Step 1: Basic Information -->
-        <div class="form-step active">
+        <div class="form-step active" id="step-1">
             <label for="gender">Gender</label>
-            <select id="gender" name="gender" onchange="toggleHipInput()" required>
-                <option value="">Select</option>
+            <select id="gender" name="gender" onchange="showHipInput()">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
 
             <label for="age">Age</label>
-            <input type="number" id="age" name="age" min="1" max="120" required>
+            <input type="number" id="age" name="age" required>
 
-            <button type="button" onclick="nextStep(1)">Next</button>
-        </div>
-
-        <!-- Step 2: Body Measurements -->
-        <div class="form-step">
             <label for="height">Height (cm)</label>
             <input type="number" id="height" name="height" required>
 
             <label for="weight">Weight (kg)</label>
             <input type="number" id="weight" name="weight" required>
 
-            <label for="waist">Waist Circumference (cm)</label>
-            <input type="number" id="waist" name="waist" required>
-
-            <label for="neck">Neck Circumference (cm)</label>
-            <input type="number" id="neck" name="neck" required>
-
             <div id="hip-input">
-                <label for="hip">Hip Circumference (cm) (Female only)</label>
+                <label for="hip">Hip (cm)</label>
                 <input type="number" id="hip" name="hip">
             </div>
 
             <div class="navigation-buttons">
-                <button type="button" onclick="prevStep(2)">Previous</button>
-                <button type="button" onclick="nextStep(2)">Next</button>
+                <button type="button" onclick="nextStep()">Next</button>
             </div>
         </div>
 
-        <!-- Step 3: Workout and Goals -->
-        <div class="form-step">
-            <label for="workoutRoutine">Workout Routine</label>
-            <textarea id="workoutRoutine" name="workoutRoutine" placeholder="Describe your workout routine..." required></textarea>
+        <!-- Step 2: Measurements -->
+        <div class="form-step" id="step-2">
+            <label for="waist">Waist (cm)</label>
+            <input type="number" id="waist" name="waist" required>
 
-            <label for="fitnessGoal">Fitness Goal</label>
-            <select id="fitnessGoal" name="fitnessGoal" required>
-                <option value="">Select your goal</option>
+            <label for="neck">Neck (cm)</label>
+            <input type="number" id="neck" name="neck" required>
+
+            <div class="navigation-buttons">
+                <button type="button" onclick="prevStep()">Previous</button>
+                <button type="button" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Fitness Goals -->
+        <div class="form-step" id="step-3">
+            <label for="fitness_level">Fitness Level</label>
+            <select id="fitness_level" name="fitness_level">
+                <option value="1">Beginner</option>
+                <option value="2">Intermediate</option>
+                <option value="3">Advanced</option>
+            </select>
+
+            <label for="fitness_goals">Fitness Goals</label>
+            <select id="fitness_goals" name="fitness_goals">
                 <option value="weight_loss">Weight Loss</option>
                 <option value="muscle_gain">Muscle Gain</option>
                 <option value="endurance_improvement">Endurance Improvement</option>
                 <option value="general_fitness">General Fitness</option>
             </select>
 
-            <label for="injuriesSetbacks">Past Injuries/Setbacks</label>
-            <textarea id="injuriesSetbacks" name="injuriesSetbacks" placeholder="Mention any injuries or setbacks..." required></textarea>
-
             <div class="navigation-buttons">
-                <button type="button" onclick="prevStep(3)">Previous</button>
+                <button type="button" onclick="prevStep()">Previous</button>
                 <button type="submit">Submit</button>
             </div>
         </div>
-
     </form>
 
-    <!-- Link to JavaScript -->
+    <!-- Script to handle the form step transitions -->
     <script>
-        // JavaScript to handle form navigation and input conditions
+        let currentStep = 1;
+        const totalSteps = 3;
 
-        let currentStep = 1; // Track the current step
-
-        // Function to show the current step and hide others
-        function showStep(step) {
-            const steps = document.querySelectorAll('.form-step');
-            steps.forEach((el, index) => {
-                el.classList.toggle('active', index === step - 1); // Show only the active step
-            });
+        function nextStep() {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep++;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
         }
 
-        // Move to the next step
-        function nextStep(current) {
-            currentStep = current + 1;
-            showStep(currentStep);
+        function prevStep() {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
         }
 
-        // Move to the previous step
-        function prevStep(current) {
-            currentStep = current - 1;
-            showStep(currentStep);
-        }
-
-        // Show or hide hip size input based on gender
-        function toggleHipInput() {
+        function showHipInput() {
             const gender = document.getElementById('gender').value;
             const hipInput = document.getElementById('hip-input');
             if (gender === 'female') {
@@ -231,36 +266,7 @@
                 hipInput.style.display = 'none';
             }
         }
-
-        // Initialize form behavior
-        document.addEventListener('DOMContentLoaded', () => {
-            showStep(currentStep);  // Start with the first step
-            toggleHipInput();  // Ensure the hip input is hidden for males on page load
-
-            // Form submission
-            const form = document.getElementById('fitnessForm');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();  // Prevent the default form submission behavior
-
-                // Gather form data
-                const gender = document.getElementById('gender').value;
-                const age = document.getElementById('age').value;
-                const height = document.getElementById('height').value;
-                const weight = document.getElementById('weight').value;
-                const waist = document.getElementById('waist').value;
-                const neck = document.getElementById('neck').value;
-                const hip = gender === 'female' ? document.getElementById('hip').value : null;
-                const workoutRoutine = document.getElementById('workoutRoutine').value;
-                const fitnessGoal = document.getElementById('fitnessGoal').value;
-                const injuriesSetbacks = document.getElementById('injuriesSetbacks').value;
-
-                // Display collected data for debugging (in real use case, submit data to backend)
-                console.log({
-                    gender, age, height, weight, waist, neck, hip, workoutRoutine, fitnessGoal, injuriesSetbacks
-                });
-                alert("Form submitted successfully!");
-            });
-        });
     </script>
+
 </body>
 </html>
