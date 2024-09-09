@@ -2,7 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import math
 import os
+#from api.test import get_diet_and_workout_plan
 
+
+# Initialize the Flask app
 app = Flask(__name__)
 
 # Set up the SQLite database
@@ -23,8 +26,10 @@ class User(db.Model):
     waist = db.Column(db.Float, nullable=False)
     neck = db.Column(db.Float, nullable=False)
     hip = db.Column(db.Float, nullable=True)
+    current_fitness_level = db.Column(db.String(50), nullable=False)
+    workout_routine = db.Column(db.Text, nullable=False)
     fitness_goal = db.Column(db.String(50), nullable=False)
-    workout_routine = db.Column(db.Integer, nullable=False)
+    injuries_setbacks = db.Column(db.Text, nullable=True)
     fat_percentage = db.Column(db.Float, nullable=False)
     bmi = db.Column(db.Float, nullable=False)
     fitness_classification = db.Column(db.String(100), nullable=False)
@@ -102,16 +107,19 @@ def submit_form():
     waist = float(request.form['waist'])
     neck = float(request.form['neck'])
     hip = float(request.form['hip']) if gender == 'female' else None
-    fitness_goal = request.form['fitness_goals']
-    workout_routine = int(request.form['fitness_level'])  # Assume workout routine is tied to fitness level
+    current_fitness_level = request.form['currentFitnessLevel']
+    workout_routine = request.form['workoutRoutine']
+    fitness_goal = request.form['fitnessGoal']
+    injuries_setbacks = request.form['injuriesSetbacks']
 
     # Calculate body fat percentage and BMI
     fat_percentage = calculate_body_fat_percentage(gender, height, waist, neck, hip)
     bmi = calculate_bmi(weight, height)
 
     # Classify fitness level
-    fitness_classification = classify_fitness(fat_percentage, workout_routine, bmi, age, fitness_goal)
-
+    fitness_classification = classify_fitness(fat_percentage, current_fitness_level, bmi, age, fitness_goal)
+    #result=get_diet_and_workout_plan(bmi, current_fitness_level, fitness_goal,injuries_setbacks)
+    #print(result)
     # Create a new User entry
     new_user = User(
         gender=gender,
@@ -121,8 +129,10 @@ def submit_form():
         waist=waist,
         neck=neck,
         hip=hip,
-        fitness_goal=fitness_goal,
+        current_fitness_level=current_fitness_level,
         workout_routine=workout_routine,
+        fitness_goal=fitness_goal,
+        injuries_setbacks=injuries_setbacks,
         fat_percentage=fat_percentage,
         bmi=bmi,
         fitness_classification=fitness_classification
@@ -132,7 +142,7 @@ def submit_form():
     db.session.add(new_user)
     db.session.commit()
 
-    # Return a RESULT page with the fitness classification
+    # Return a result page with the fitness classification
     return f"""
     <h1>Your Fitness Classification</h1>
     <p>Body Fat Percentage: {fat_percentage:.2f}%</p>
