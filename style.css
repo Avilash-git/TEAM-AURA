@@ -1,0 +1,64 @@
+.service {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+/* For the service boxes */
+.service {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+/* Hover effect for login and register buttons */
+.nav-right ul li a {
+    color: #282c34;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #FFD700; /* Yellow color */
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Default shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-right ul li a:hover {
+    background-color: #FFC300; /* Slightly darker yellow */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+/* For the login and register buttons */
+.nav-right ul li a {
+    color: #282c34;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #FFD700; /* Yellow color */
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Default shadow */
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-right ul li a:hover {
+    background-color: white; /* Transition to white */
+    color: #282c34; /* Change text color to match header */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+

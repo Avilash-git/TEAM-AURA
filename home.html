@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERSONAL FITX - Your Fitness Journey Begins Here</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #282c34;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .nav-left ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .nav-left ul li {
+            margin: 0 10px;
+        }
+        .nav-left ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-right ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .nav-right ul li {
+            margin: 0 10px;
+        }
+        .nav-right ul li a {
+            color: #282c34;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: #FFD700; /* Yellow color */
+            border-radius: 4px;
+            font-weight: bold;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Default shadow */
+            transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .nav-right ul li a:hover {
+            background-color: white; /* Transition to white */
+            color: #282c34; /* Change text color to match header */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+        .hero {
+            background-image:url('pic01.png');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero h2 {
+            font-size: 3em;
+            color: #282c34; /* Dark blue same as header */
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 40px 0;
+        }
+        .service {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+        .button {
+            background-color: #FFD700; /* Yellow color */
+            border: none;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Default shadow */
+            transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .button:hover {
+            background-color: #fff; /* Change to white on hover */
+            color: #282c34; /* Text color changes to dark blue */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+
+        .testimonials {
+            background-color: #282c34;
+            color: white;
+            padding: 40px 20px;
+        }
+        .testimonial {
+            margin: 20px 0;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PERSONAL FITX</h1>
+        <nav>
+            <div class="nav-left">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h2>Your Fitness Journey Begins Here</h2>
+    </div>
+
+    <div class="content">
+        <h3>Our Services</h3>
+        <div class="services">
+            <div class="service">
+                <h4><button class="button" onclick="location.href='/planB/f&s.html'">Personalized Workout Plans</button></h4>
+                <p>Tailored fitness plans designed to match your goals, fitness level, and lifestyle, ensuring maximum progress.</p>
+            </div>
+            <div class="service">
+                <h4>Progress Tracking and Visualization</h4>
+                <p>Monitor your fitness journey with clear visuals and comprehensive data to see exactly how far you've come.</p>
+            </div>
+            <div class="service">
+                <h4>Virtual Tutorials</h4>
+                <p>Access on-demand virtual tutorials that guide you through exercises and workouts, making sure you perform them with correct form.</p>
+            </div>
+            <div class="service">
+                <h4>Nutrition Plans</h4>
+                <p>Personalized meal plans designed to help you meet your health and fitness goals with balanced nutrition.</p>
+            </div>
+            <div class="service">
+                <h4>Nutrition Tracking</h4>
+                <p>Keep a detailed log of your meals, calories, and nutrients to ensure you are on track with your dietary goals.</p>
+            </div>
+            <div class="service">
+                <h4>Real-Time Feedback</h4>
+                <p>Receive instant workout feedback to ensure proper form and maximize the effectiveness of your exercises.</p>
+            </div>
+        </div>
+
+        <h3>Testimonials</h3>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>"PERSONAL FITX has transformed my life! The trainers are amazing and the community is so supportive!" - Jane Doe</p>
+            </div>
+            <div class="testimonial">
+                <p>"I've never felt stronger and healthier. PERSONAL FITX's programs are top-notch!" - John Smith</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PERSONAL FITX. All rights reserved.</p>
+        <p>Follow us on social media: Facebook | Twitter | Instagram</p>
+    </footer>
+
+</body>
+</html>
