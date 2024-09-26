@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+import google.generativeai as genai
 import math
 import os
 
@@ -25,12 +26,10 @@ class User(db.Model):
     neck = db.Column(db.Float, nullable=False)
     hip = db.Column(db.Float, nullable=True)
     fitness_level = db.Column(db.String(50), nullable=False)
-    #workout_routine = db.Column(db.String(50), nullable=False)
     fitness_goal = db.Column(db.String(50), nullable=False)
     injury_setbacks = db.Column(db.String(50), nullable=False)
     fat_percentage = db.Column(db.Float, nullable=False)
     bmi = db.Column(db.Float, nullable=False)
-    #fitness_classification = db.Column(db.String(50), nullable=False)
     sleep_routine = db.Column(db.String(50), nullable=False)
     medi_condition = db.Column(db.Text, nullable=True)
 
@@ -53,63 +52,87 @@ def index():
 def login():
     return render_template('login.html')
 
-
-
 @app.route('/personalfit')
 def personalfit():
     return render_template('personalfit.html')
 
-
 @app.route('/submit_form', methods=['GET', 'POST'])
 def submit_form():
-    # Get form data
-    id = 101
-    gender = request.form.get('gender')
-    age = int(request.form.get('age'))
-    height = float(request.form.get('height'))
-    weight = float(request.form.get('weight'))
-    waist = float(request.form.get('waist'))
-    neck = float(request.form.get('neck'))
-    hip = float(request.form.get('hip')) if gender == 'female' else None
-    fitness_level = request.form.get('fitness_level')
-    fitness_goal = request.form.get('fitness_goal')
-    sleep_routine = request.form.get('sleep_routine')
-    medi_condition = request.form.get('medi_condition')
-    injury_setbacks = request.form.get('injury_setbacks')
-    print(gender)
+    if request.method == 'POST':
+        # Get form data
+        id = 101
+        gender = request.form.get('gender')
+        age = int(request.form.get('age'))
+        height = float(request.form.get('height'))
+        weight = float(request.form.get('weight'))
+        waist = float(request.form.get('waist'))
+        neck = float(request.form.get('neck'))
+        hip = float(request.form.get('hip')) if gender == 'female' else None
+        fitness_level = request.form.get('fitness_level')
+        fitness_goal = request.form.get('fitness_goal')
+        sleep_routine = request.form.get('sleep_routine')
+        medi_condition = request.form.get('medi_condition')
+        injury_setbacks = request.form.get('injury_setbacks')
 
-    # Calculate body fat percentage and BMI
-    fat_percentage = calculate_body_fat_percentage(gender, height, waist, neck, hip)
-    bmi = calculate_bmi(weight, height)
+        # Calculate body fat percentage and BMI
+        fat_percentage = calculate_body_fat_percentage(gender, height, waist, neck, hip)
+        bmi = calculate_bmi(weight, height)
 
-    # Create a new User entry
-    new_user = User(
-        id=id,
-        gender=gender,
-        age=age,
-        height=height,
-        weight=weight,
-        waist=waist,
-        neck=neck,
-        hip=hip,
-        fitness_level=fitness_level,
-        #workout_routine=workout_routine,  # Adjust if needed
-        fitness_goal=fitness_goal,
-        injury_setbacks=injury_setbacks,
-        fat_percentage=fat_percentage,
-        bmi=bmi,
-        
-        
-        sleep_routine=sleep_routine,
-        medi_condition=medi_condition
-    )
+        # Create a new User entry
+        new_user = User(
+            id=id,
+            gender=gender,
+            age=age,
+            height=height,
+            weight=weight,
+            waist=waist,
+            neck=neck,
+            hip=hip,
+            fitness_level=fitness_level,
+            fitness_goal=fitness_goal,
+            injury_setbacks=injury_setbacks,
+            fat_percentage=fat_percentage,
+            bmi=bmi,
+            sleep_routine=sleep_routine,
+            medi_condition=medi_condition
+        )
 
-    # Save user data to the database
-    db.session.add(new_user)
-    db.session.commit()
+        # Save user data to the database
+        db.session.add(new_user)
+        db.session.commit()
 
-    # Return a result page with the fitness classification
-    return #
+        # Get diet and workout plan
+        diet_plan = get_diet_and_workout_plan(gender, age, height, weight, waist, neck, hip, fitness_level, fitness_goal, injury_setbacks, fat_percentage, bmi, sleep_routine, medi_condition)
+
+        # Return the result page with the fitness classification and plans
+        return render_template('result.html', classification=fitness_level, diet_plan=diet_plan, workout_plan=diet_plan)
+
+def get_diet_and_workout_plan(gender, age, height, weight, waist, neck, hip, fitness_level, fitness_goal, injury_setbacks, fat_percentage, bmi, sleep_routine, medi_condition):
+    # Choose a model (replace with the desired model name)
+    genai.configure(api_key="AIzaSyCq5XjUyIku8TIhp_3NcsmB8GJf0JaMtdE")
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
+    # Construct the prompt for structured output
+    prompt = (f"Create a fitness plan for a {age} year old {gender} "
+              f"with a height of {height} cm, weight of {weight} kg, "
+              f"waist circumference of {waist} cm, neck circumference of {neck} cm, "
+              f"hip circumference of {hip} cm, fitness level: {fitness_level}, "
+              f"fitness goal: {fitness_goal}, injury setbacks: {injury_setbacks}, "
+              f"body fat percentage: {fat_percentage:.2f}%, BMI: {bmi:.2f}, "
+              f"sleep routine: {sleep_routine}, medical conditions: {medi_condition}.")
+
+    # Generate the response
+    response = model.generate_content(prompt)
+
+    # Split the response into diet and workout plans (if possible)
+    output = response.text.split("\n")  # Assuming each line represents a different part
+
+    # Formatting output
+    structured_output = "\n".join(line.strip() for line in output if line.strip())
+
+    return structured_output
+
+
 
 if __name__ == '__main__':
     # Create the database tables
