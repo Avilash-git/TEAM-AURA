@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Classification Result</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(to right, #2193b0, #6dd5ed);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .result-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 20px 0 10px;
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #34a853;
+            font-weight: 600;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #2c7a3b; /* Darker shade on hover */
+        }
+
+        pre {
+            white-space: pre-wrap; /* Preserve formatting */
+            word-wrap: break-word; /* Break long lines */
+            font-size: 16px; /* Adjust font size for readability */
+            color: #e0e0e0; /* Lighter text for better contrast */
+            background-color: rgba(255, 255, 255, 0.1); /* Light background for contrast */
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: auto; /* Enable scrolling for long content */
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Your Fitness Classification</h1>
+        <p><strong>{{ classification }}</strong></p>
+
+        <h2>Your Diet Plan:</h2>
+        <pre>{{ diet_plan }}</pre> <!-- Using <pre> to preserve formatting -->
+
+        <h2>Your Workout Plan:</h2>
+        <pre>{{ workout_plan }}</pre>
+
+        <p><a href="{{ url_for('index') }}">Go Back</a></p>
+    </div>
+</body>
+</html>
