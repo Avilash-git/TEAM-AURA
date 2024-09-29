@@ -61,6 +61,9 @@ def personalfit():
 @app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
+@app.route('/track')
+def track():
+    return render_template('tracking.html')
 
 
 
@@ -122,6 +125,7 @@ def get_diet_and_workout_plan(gender, age, height, weight, waist, neck, hip, fit
 
     # Construct the prompt for structured output
     prompt = (f"""
+Assume and act yourself as my personal fitness trainer with a clear and deep knowledge on fitness and nutrition  , who can give a clear and personalised workout plans and nutrition plans for the users with the provided details and         
 Create a personalized, well-structured fitness and diet plan based on the following user information. The plan should include a detailed weekly workout schedule, daily workout routine, and a comprehensive nutrition plan tailored to their specific needs. The output should be scientifically sound and aligned with their fitness goals, taking into account all provided parameters. Please structure the plan in the following way:
 
 User Information:
