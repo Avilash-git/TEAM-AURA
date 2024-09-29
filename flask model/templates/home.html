@@ -66,7 +66,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
         }
         .hero {
-            background:url('/static/pictures/pic01.png');
+            background: url('/static/pictures/pic01.png');
             background-size: cover;
             background-position: center;
             height: 400px;
@@ -154,9 +154,7 @@
             </div>
             <div class="nav-right">
                 <ul>
-                    
                     <li><a href="{{ url_for('login') }}">Login</a></li>
-
                     <li><a href="register.html">Register</a></li>
                 </ul>
             </div>
@@ -178,7 +176,7 @@
                 </script>
                 
                 <h4><button class="button" onclick="goToPersonalFit()">Personalized Workout Plans</button></h4>
-                                <p>Tailored fitness plans designed to match your goals, fitness level, and lifestyle, ensuring maximum progress.</p>
+                <p>Tailored fitness plans designed to match your goals, fitness level, and lifestyle, ensuring maximum progress.</p>
             </div>
             <div class="service">
                 <h4><button class="button">Progress Tracking and Visualization</button></h4>
@@ -193,7 +191,12 @@
                 <p>Personalized meal plans designed to help you meet your health and fitness goals with balanced nutrition.</p>
             </div>
             <div class="service">
-                <h4><button class="button">Nutrition Tracking</button></h4>
+                <script>
+                    function goToNutritionTrack() {
+                        window.location.href = "{{ url_for('track') }}";
+                    }
+                </script>
+                <h4><button class="button" onclick="goToNutritionTrack()">Nutrition Tracking</button></h4>
                 <p>Keep a detailed log of your meals, calories, and nutrients to ensure you are on track with your dietary goals.</p>
             </div>
             <div class="service">
@@ -220,8 +223,7 @@
 
     <footer>
         <p>&copy; 2024 PERSONAL FITX. All rights reserved.</p>
-        <p>Follow us on social media: Facebook | Twitter | Instagram</p>
+        <p>Follow us on social media!</p>
     </footer>
-
 </body>
 </html>
