@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import google.generativeai as genai
 import math
 import os
+import random
+
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -56,11 +58,17 @@ def login():
 def personalfit():
     return render_template('personalfit.html')
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
+
+
 @app.route('/submit_form', methods=['GET', 'POST'])
 def submit_form():
     if request.method == 'POST':
         # Get form data
-        id = 101
+        id = random.randint(1, 1000)
         gender = request.form.get('gender')
         age = int(request.form.get('age'))
         height = float(request.form.get('height'))
@@ -113,13 +121,73 @@ def get_diet_and_workout_plan(gender, age, height, weight, waist, neck, hip, fit
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     # Construct the prompt for structured output
-    prompt = (f"Create a fitness plan for a {age} year old {gender} "
-              f"with a height of {height} cm, weight of {weight} kg, "
-              f"waist circumference of {waist} cm, neck circumference of {neck} cm, "
-              f"hip circumference of {hip} cm, fitness level: {fitness_level}, "
-              f"fitness goal: {fitness_goal}, injury setbacks: {injury_setbacks}, "
-              f"body fat percentage: {fat_percentage:.2f}%, BMI: {bmi:.2f}, "
-              f"sleep routine: {sleep_routine}, medical conditions: {medi_condition}.")
+    prompt = (f"""
+Create a personalized, well-structured fitness and diet plan based on the following user information. The plan should include a detailed weekly workout schedule, daily workout routine, and a comprehensive nutrition plan tailored to their specific needs. The output should be scientifically sound and aligned with their fitness goals, taking into account all provided parameters. Please structure the plan in the following way:
+
+User Information:
+
+Gender: {gender}
+Age: {age}
+Height: {height} cm/inches
+Weight: {weight} kg/lbs
+Waist measurement: {waist} cm/inches
+Neck measurement: {neck} cm/inches
+Hip measurement: {hip} cm/inches (if applicable)
+Fitness level: {fitness_level}
+Fitness goals: {fitness_goal}
+Injury setbacks: {injury_setbacks}
+Body fat percentage: {fat_percentage}%
+BMI: {bmi}
+Sleep routine: {sleep_routine}
+Medical conditions: {medi_condition}
+
+
+Output Requirements:
+
+1. Weekly Workout Split:
+
+Design a 7-day workout schedule, clearly defining which muscle groups or fitness components (e.g., strength, endurance, flexibility) are worked on each day.
+Include rest days and recovery sessions (e.g., stretching, yoga, or low-intensity cardio) optimized for recovery based on injury setbacks or fatigue.
+The workout split should be aligned with their fitness level and goal (e.g., muscle building, fat loss, endurance training).
+Specify exact training modes (e.g., push-pull split, full-body workouts, upper/lower body days, etc.).
+
+2. Daily Workout Routine:
+
+For each workout day, provide a detailed breakdown of exercises (e.g., squats, bench press, deadlifts), including:
+- Number of sets and reps.
+- Rest time between sets.
+- Weight recommendations based on fitness level and goal.
+- Modifications for injury setbacks (e.g., knee injury: replace squats with leg press).
+- Include warm-up and cool-down routines specific to the user’s needs.
+
+3. Nutrition Plan:
+
+- Provide a daily caloric intake suggestion based on their age, weight, height, activity level, and fitness goal.
+- Create a macro breakdown (percentage of protein, carbohydrates, and fats) tailored to their goal (e.g., high-protein for muscle gain, lower carbs for fat loss).
+- Suggest 3-6 meals per day, with specific portion sizes and examples for each meal, considering dietary preferences (e.g., if vegan, list plant-based proteins).
+- Include pre- and post-workout meal ideas for optimizing performance and recovery.
+- Provide hydration guidelines based on body weight and activity level.
+
+4. Weekly Nutrition Schedule:
+
+- Organize the nutrition plan by day, outlining when to increase or decrease carbs (carb cycling) to align with workout intensity (e.g., higher carbs on leg day, lower carbs on rest days).
+- Include guidance on meal timing to optimize energy, recovery, and muscle synthesis (e.g., post-workout meal within 45 minutes of training).
+- Suggest snack options for mid-morning, mid-afternoon, or evening cravings.
+
+5. Sleep Optimization Tips:
+
+- Suggest a tailored sleep improvement strategy to improve overall recovery and performance, based on their current routine.
+- Include recommendations for enhancing sleep quality (e.g., avoiding screens before bed, practicing relaxation techniques).
+
+6. Additional Health Tips:
+
+- Provide specific advice on hydration, stress management, and recovery techniques (e.g., foam rolling, ice baths) relevant to their lifestyle.
+- Address any medical conditions (e.g., adjustments for heart disease or diabetes) in both workout and nutrition plans.
+- Include tips for improving mental focus, motivation, and habit-building strategies to maintain long-term fitness progress.
+"""
+    )
+
+
 
     # Generate the response
     response = model.generate_content(prompt)
