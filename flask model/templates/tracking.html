@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .graph-container {
+            width: 60%;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-values {
+            width: 35%;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .value-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .food-details {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Nutrition Tracker</h1>
+
+        <div class="main-content">
+            <div class="graph-container">
+                <canvas id="goalReachedChart"></canvas>
+            </div>
+            <div class="user-values">
+                <h3>User Input Values</h3>
+                <div class="value-box">
+                    <div class="value-item">
+                        <span>Protein:</span>
+                        <span id="proteinValue">80g</span>
+                    </div>
+                    <div class="value-item">
+                        <span>Fats:</span>
+                        <span id="fatValue">30g</span>
+                    </div>
+                    <div class="value-item">
+                        <span>Carbs:</span>
+                        <span id="carbValue">150g</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-details">
+            <h2>Food Intake Details</h2>
+            <table>
+                <tr>
+                    <th>Food Item</th>
+                    <th>Calories</th>
+                    <th>Protein (g)</th>
+                    <th>Carbs (g)</th>
+                    <th>Fats (g)</th>
+                </tr>
+                <tr>
+                    <td>Chicken Breast (100g)</td>
+                    <td>165</td>
+                    <td>31</td>
+                    <td>0</td>
+                    <td>3.6</td>
+                </tr>
+                <tr>
+                    <td>Brown Rice (150g)</td>
+                    <td>165</td>
+                    <td>4.5</td>
+                    <td>34.5</td>
+                    <td>1.5</td>
+                </tr>
+                <tr>
+                    <td>Broccoli (100g)</td>
+                    <td>34</td>
+                    <td>2.8</td>
+                    <td>7.2</td>
+                    <td>0.4</td>
+                </tr>
+                <tr>
+                    <td>Olive Oil (1 tbsp)</td>
+                    <td>119</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>13.5</td>
+                </tr>
+                <tr>
+                    <td>Greek Yogurt (150g)</td>
+                    <td>100</td>
+                    <td>10</td>
+                    <td>6</td>
+                    <td>4</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('goalReachedChart').getContext('2d');
+        const goalReachedChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Protein', 'Fats', 'Carbs'],
+                datasets: [{
+                    label: 'Nutrient Intake',
+                    data: [80, 30, 150],  // Current intake values
+                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                    hoverBackgroundColor: ['#1D6EBA', '#C82C3A', '#D3B12E'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 200  // Adjust according to your goals
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
